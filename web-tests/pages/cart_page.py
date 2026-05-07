@@ -4,12 +4,13 @@ from pages.base_page import BasePage
 
 
 class CartPage(BasePage):
+    CART_CONTAINER = (By.CLASS_NAME, "cart_list")
     CART_ITEMS = (By.CLASS_NAME, "cart_item")
     CHECKOUT_BUTTON = (By.ID, "checkout")
 
     def get_items_count(self):
-        # Espera pelo menos 1 item aparecer antes de contar
-        self.wait.until(EC.presence_of_element_located(self.CART_ITEMS))
+        # Espera o container do carrinho aparecer primeiro
+        self.wait.until(EC.presence_of_element_located(self.CART_CONTAINER))
         return len(self.driver.find_elements(*self.CART_ITEMS))
 
     def proceed_to_checkout(self):

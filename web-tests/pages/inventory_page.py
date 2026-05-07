@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 
 
@@ -25,3 +26,5 @@ class InventoryPage(BasePage):
 
     def go_to_cart(self):
         self.click(self.CART_ICON)
+        # Espera a URL mudar para /cart.html
+        self.wait.until(EC.url_contains("cart"))
