@@ -25,6 +25,8 @@ class InventoryPage(BasePage):
         return self.get_text(self.CART_BADGE)
 
     def go_to_cart(self):
-        self.click(self.CART_ICON)
-        # Espera a URL mudar para /cart.html
-        self.wait.until(EC.url_contains("cart"))
+        # Usa JavaScript para garantir o clique mesmo em headless
+        cart = self.wait.until(EC.element_to_be_clickable(self.CART_ICON))
+        self.driver.execute_script("arguments[0].click();", cart)
+        # Espera o botão de checkout aparecer (confirma que está no carrinho)
+        self.wait.until(EC.presence_of_element_located((By.ID, "checkout")))
